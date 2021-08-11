@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-between align-items-center">
+  <h1>List of restaurants</h1>
+  <%= link_to new_restaurant_path, class: 'add-button btn btn-dark d-flex justify-content-between align-items-center' do %>
+    <i class="fas fa-plus"></i>
+    <p>Add a new restaurant</p>
+  <% end %>
+</div>
+
+<ul>
+  <% @restaurants.each do |restaurant| %>
+    <li><%= link_to restaurant.name, restaurant_path(restaurant) %></li>
+  <% end %>
+</ul>

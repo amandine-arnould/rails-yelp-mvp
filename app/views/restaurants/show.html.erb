@@ -1,0 +1,31 @@
+<h1><%= @restaurant.name %></h1>
+
+<p>Address: <%= @restaurant.address %></p>
+<p>Phone number: <%= @restaurant.phone_number %></p>
+<p>Category: <%= @restaurant.category %></p>
+<p>Reviews: (<%= @restaurant.reviews.count %>)</p>
+<% ratings = [] %>
+<% @restaurant.reviews.each do |review| %>
+  <% ratings << review.rating %>
+<% end %>
+<p>Mean rating: <%= (ratings.sum.to_f / ratings.length).nan? ? 0 : (ratings.sum.to_f / ratings.length).round(2) %>/5</p>
+
+<ul>
+  <% @restaurant.reviews.each do |review| %>
+    <li>
+      Rating: <%= review.rating %>/5 - <%= review.content %>
+    </li>
+  <% end %>
+</ul>
+
+<%= simple_form_for [@restaurant, @review] do |f| %>
+  <%= f.select :rating, Review::RATINGS%>
+  <%= f.input :content %>
+  <%= f.submit class: 'create-button btn btn-primary' %>
+<% end %>
+
+
+<%= link_to restaurants_path, class: 'back-button btn btn-dark d-flex justify-content-between align-items-center' do %>
+  <i class="fas fa-undo-alt"></i>
+  <p>Back to the list of restaurants</p>
+<% end %>
